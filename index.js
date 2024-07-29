@@ -5,6 +5,7 @@ import admin from 'firebase-admin';
 
 dotenv.config(); 
 
+// Firebase Function
 admin.initializeApp({
     credential: admin.credential.cert(process.env.FIREBASE_CREDENTIALS_PATH),
     databaseURL: process.env.FIREBASE_DATABASE_URL
@@ -14,6 +15,9 @@ const app = express();
 const PORT = process.env.PORT
 
 app.use(express.json());
+
+
+// =--==-=-=-=- Firebase Realtime Database Operations =--=-=-=-=-=-=-=-
 
 // ---------------------- Used for writing Data to DB ----------------------
 /*  const db = admin.database();
@@ -53,8 +57,8 @@ writeData(db)
 
 */
 // ----------------------------------------------------
- 
 
+// Read Data from firebase Database(/getSMS Endpoint):
 app.get('/getSMS', async (req, res) => {
     try {
         const smsRef = admin.database().ref('sms');
@@ -80,7 +84,7 @@ app.get('/getSMS', async (req, res) => {
 });
 
 // ----------------------------------------------------
-
+// Read and Write Data to Database (/processSMS Endpoint):
 app.get('/processSMS', async (req, res) => {
     try {
         const smsRef = admin.database().ref('sms');
